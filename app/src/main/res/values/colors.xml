@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="darkColor">#000000</color>
+    <color name="lightColor">#ffffff</color>
+
+    <color name="textColor">#181818</color>
+    <color name="btnColor">#E76747</color>
+
+    <color name="dark01Color">#1A000000</color>
+    <color name="light01Color">#1AFFFFFF</color>
+
+    <color name="greyColor">#535252</color>
+
+    <color name="colorPrimary">#fff</color>
+    <color name="colorAccent">#fff</color>
+</resources>
