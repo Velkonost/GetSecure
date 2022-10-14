@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.get.secure.di.SpecificReposModule
 import com.get.secure.di.scope.ViewModelKey
 import com.get.secure.ui.CommonViewModelModule
+import com.get.secure.ui.browser.BrowserViewModel
 import com.get.secure.ui.splash.SplashViewModel
 import dagger.Binds
 import dagger.Module
@@ -19,9 +20,13 @@ interface ViewModelModule {
 @Module
 interface MainProvidersModule {
 
-
     @Binds
     @IntoMap
     @ViewModelKey(SplashViewModel::class)
     fun splashViewModel(m: SplashViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(BrowserViewModel::class)
+    fun browserViewModel(m: BrowserViewModel): ViewModel
 }

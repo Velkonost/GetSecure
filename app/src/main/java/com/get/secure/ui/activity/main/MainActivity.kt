@@ -7,27 +7,19 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.pm.PackageManager
 import android.database.Cursor
-import android.net.ConnectivityManager
 import android.os.Bundle
-import androidx.core.content.ContextCompat
-import androidx.core.view.isVisible
 import com.get.secure.App
 import com.get.secure.R
+import com.get.secure.RequestCodes
 import com.get.secure.databinding.ActivityMainBinding
+import com.get.secure.navigation.Screens
 import com.get.secure.navigation.SupportAppNavigator
 import com.get.secure.ui.base.BaseActivity
-import com.get.secure.vm.BaseViewModel
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.view.*
-import java.util.*
-import com.google.firebase.analytics.FirebaseAnalytics
-import com.jaeger.library.StatusBarUtil
-import com.get.secure.navigation.Screens
 import com.get.secure.ui.base.BaseFragment
-import com.get.secure.util.ext.setTouchAnimation
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
+import com.get.secure.util.checkPermissionForReadExternalStorage
+import com.get.secure.vm.BaseViewModel
 
 
 class MainActivity : BaseActivity<BaseViewModel, ActivityMainBinding>(
@@ -60,9 +52,20 @@ class MainActivity : BaseActivity<BaseViewModel, ActivityMainBinding>(
 
         registerReceiver(onDownloadComplete, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
 
-        val wallpaperManager = WallpaperManager.getInstance(this)
-        val wallpaperDrawable = wallpaperManager.drawable
-        binding.container.background = wallpaperDrawable
+        setupWallpaper()
+    }
+
+    private fun setupWallpaper() {
+        if (this.checkPermissionForReadExternalStorage()) {
+            kotlin.runCatching {
+                val wallpaperManager = WallpaperManager.getInstance(this)
+                binding.container.background = wallpaperManager.drawable
+            }.onFailure {
+
+            }
+        } else {
+
+        }
     }
 
     private val onDownloadComplete: BroadcastReceiver = object : BroadcastReceiver() {
@@ -148,7 +151,22 @@ class MainActivity : BaseActivity<BaseViewModel, ActivityMainBinding>(
     ) {
         val fragment = supportFragmentManager.findFragmentById(R.id.subContainer)
 
-        (fragment as BaseFragment<*, *>).onRequestPermissionsResult(requestCode, permissions, grantResults)
+        (fragment as BaseFragment<*, *>).onRequestPermissionsResult(
+            requestCode,
+            permissions,
+            grantResults
+        )
+
+        when (requestCode) {
+            RequestCodes.REQUEST_PERMISSION_READ_EXTERNAL_STORAGE -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    setupWallpaper()
+                } else {
+
+                }
+
+            }
+        }
 
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 

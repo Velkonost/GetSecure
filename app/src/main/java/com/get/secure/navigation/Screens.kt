@@ -1,15 +1,19 @@
 package com.get.secure.navigation
 
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentFactory
-import com.github.terrakok.cicerone.androidx.FragmentScreen
+import com.get.secure.ui.browser.BrowserFragment
 import com.get.secure.ui.splash.SplashFragment
+import com.github.terrakok.cicerone.androidx.FragmentScreen
 
 object Screens {
 
     fun splashScreen() = FragmentScreen {
         SplashFragment()
+    }
+
+    fun browserScreen() = FragmentScreen {
+        BrowserFragment()
     }
 }
 

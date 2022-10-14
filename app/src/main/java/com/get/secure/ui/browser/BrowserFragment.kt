@@ -1,12 +1,12 @@
-package com.get.secure.ui.splash
+package com.get.secure.ui.browser
 
 import com.get.secure.R
 import com.get.secure.databinding.FragmentSplashBinding
 import com.get.secure.ui.base.BaseFragment
 
-class SplashFragment : BaseFragment<SplashViewModel, FragmentSplashBinding>(
-    R.layout.fragment_splash,
-    SplashViewModel::class,
+class BrowserFragment : BaseFragment<BrowserViewModel, FragmentSplashBinding>(
+    R.layout.fragment_browser,
+    BrowserViewModel::class,
     Handler::class
 ) {
 
